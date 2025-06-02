@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { parse } from 'jsr:@std/csv';
 
 type Submission = {
@@ -15,8 +16,13 @@ type Submission = {
   Pscore: number;
   S1name: string;
   S1score: number;
+  S2name: string;
+  S2score: number;
+  S3name: string;
+  S3score: number;
   E1score: number;
   E2score: number;
+  E3score: number;
 };
 
 async function getData(filename: string) {
@@ -36,9 +42,9 @@ async function getData(filename: string) {
     ReviewsTentative: parseInt(row.ReviewsTentative),
     OverallScore: parseFloat(row.OverallScore),
     OverallStdDev: parseFloat(row.OverallStdDev),
-    Pname: row.Pname,
+    Pname: row.Pname || '',
     Pscore: parseFloat(row.Pscore),
-    S1name: row.S1name,
+    S1name: row.S1name || '',
     S1score: parseFloat(row.S1score),
     E1score: parseFloat(row.E1score),
     E2score: parseFloat(row.E2score),
@@ -50,9 +56,12 @@ const isNan = (value: any) => {
 };
 
 const raw = await getData('Submissions.csv');
-const data = raw.filter(({ Decision }) => Decision === '');
-//   .map(({ S1score }) => S1score)
-//   .filter((score) => !isNan(score));
+const data = raw
+  .filter(({ Decision }) => Decision === '')
+  .filter(({ Subcommittee }) => Subcommittee === 'Split B')
+  .filter(({ ReviewsTotal, Pname }) => {
+    return ReviewsTotal > 0 && Pname != '';
+  });
 
 // type Occurrences = {
 //   [key: number]: number;
@@ -62,6 +71,7 @@ const data = raw.filter(({ Decision }) => Decision === '');
 // }, {});
 
 // console.log(occurrences);
+
 const noReview = data.filter(
   ({ ReviewsDone, ReviewsLeft }) => ReviewsDone === 0 && ReviewsLeft > 0
 );
@@ -77,6 +87,7 @@ const missingBothExternals = data.filter(
 const missin2AC = data.filter(({ S1score }) => isNan(S1score));
 
 console.log(raw.length, 'submissions total');
+
 console.log(data.length, 'filtered total');
 console.log(raw.length - data.length, 'filtered out');
 console.log(noReview.length, 'submissions with no reviews done');
@@ -91,3 +102,10 @@ console.log(
 );
 console.log(missingAnExternals.length, 'submissions with missing an external');
 console.log(missin2AC.length, 'submissions with missing 2AC reviews');
+
+if (missingBothExternals.length > 0) {
+  console.log(
+    missingBothExternals.map(({ ID }) => ID).join(', '),
+    'IDs of missing both externals'
+  );
+}
