@@ -2,6 +2,7 @@
 open Utils
 open FSharp.Stats
 open System.IO
+open XPlot.Plotly
 
 let scores (submission: Submission) =
     [| submission.MetaScore
@@ -146,4 +147,12 @@ let main argv =
             (id, s, avg))
         |> Seq.iter (fun (id, s, (avg, sd)) -> printfn "%d, %.2f, %A" id avg s)
     *)
+
+
+    Histogram(x = allscores)
+    |> Chart.Plot
+    |> Chart.WithWidth 700
+    |> Chart.WithHeight 500
+    |> Chart.Show
+
     0

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "CWtUZv/BNr4=",
+  "dgSpecHash": "s7f33L/l9KI=",
   "success": true,
   "projectFilePath": "/Users/andrea/Desktop/stats_uist/uist_fstats.fsproj",
   "expectedPackageFiles": [
@@ -18,7 +18,9 @@
     "/Users/andrea/.nuget/packages/fsharpaux/2.0.0/fsharpaux.2.0.0.nupkg.sha512",
     "/Users/andrea/.nuget/packages/fsharpaux.core/2.0.0/fsharpaux.core.2.0.0.nupkg.sha512",
     "/Users/andrea/.nuget/packages/fsharpaux.io/2.0.0/fsharpaux.io.2.0.0.nupkg.sha512",
-    "/Users/andrea/.nuget/packages/optimizedpriorityqueue/5.1.0/optimizedpriorityqueue.5.1.0.nupkg.sha512"
+    "/Users/andrea/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512",
+    "/Users/andrea/.nuget/packages/optimizedpriorityqueue/5.1.0/optimizedpriorityqueue.5.1.0.nupkg.sha512",
+    "/Users/andrea/.nuget/packages/xplot.plotly/4.1.0/xplot.plotly.4.1.0.nupkg.sha512"
   ],
   "logs": []
 }

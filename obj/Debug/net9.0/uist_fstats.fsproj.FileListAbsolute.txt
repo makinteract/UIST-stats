@@ -85,3 +85,5 @@
 /Users/andrea/Desktop/stats_uist/obj/Debug/net9.0/uist_fstats.pdb
 /Users/andrea/Desktop/stats_uist/obj/Debug/net9.0/uist_fstats.genruntimeconfig.cache
 /Users/andrea/Desktop/stats_uist/obj/Debug/net9.0/ref/uist_fstats.dll
+/Users/andrea/Desktop/stats_uist/bin/Debug/net9.0/Newtonsoft.Json.dll
+/Users/andrea/Desktop/stats_uist/bin/Debug/net9.0/XPlot.Plotly.dll
