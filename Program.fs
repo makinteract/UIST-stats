@@ -1,5 +1,4 @@
-﻿// module UISTstats
-open Utils
+﻿open Utils
 open FSharp.Stats
 open System.IO
 open XPlot.Plotly
@@ -33,7 +32,7 @@ let isSplitB (sub: Submission) = sub.Subcommittee = SplitB
 let isConflict (sub: Submission) =
     sub.Pname.IsNone && sub.S1name.IsNone && sub.ReviewsTotal > 0
 
-let metaMissing (sub: Submission) = sub.Pscore.IsNone
+let metaMissing (sub: Submission) = sub.MetaScore.IsNone
 
 let committeeMissing (sub: Submission) =
     let reviews = sub |> committeeScores |> Array.choose id |> Array.length
@@ -69,9 +68,12 @@ let printStats (header: string, submissions: seq<Submission>) =
     submissions |> Seq.length |> printfn "Total submissions: %d"
 
     let links = submissions |> Seq.filter metaMissing |> Seq.map getLink
+    let metaMissingCount = Seq.length links
+    let metaDoneCount = Seq.length submissions - metaMissingCount
 
     printfn
-        "Meta: %d (%.1f%%)"
+        "Metas (%d): %d (%.1f%%)"
+        metaDoneCount
         (Seq.length links)
         (100.0 - float (Seq.length links) / float (Seq.length submissions) * 100.0)
 
@@ -149,10 +151,16 @@ let main argv =
     *)
 
 
-    Histogram(x = allscores)
+    Histogram(
+        x = allscores, //
+        autobinx = false,
+        name = "All submissions",
+        xbins = Xbins(start = 0, ``end`` = 5, size = 0.25)
+    )
     |> Chart.Plot
     |> Chart.WithWidth 700
     |> Chart.WithHeight 500
+    |> Chart.WithLayout(Layout(yaxis = Yaxis(title = "Count", range = [ 0.0; 200.0 ])))
     |> Chart.Show
 
     0
