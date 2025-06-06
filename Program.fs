@@ -129,8 +129,9 @@ let main argv =
 
     // accetance rate for papers above a certain score
     let mean = allscores |> Seq.average
-    let accept = allscores |> Seq.filter (fun x -> x > 3.2) |> Seq.length
-    printf "Acceptance rate: %.1f" (100.0 * float accept / float (Seq.length allscores))
+    let threshold = 3.2
+    let accept = allscores |> Seq.filter (fun x -> x > threshold) |> Seq.length
+    printf "Acceptance rate for %.1f threshold: %.1f%%" threshold (100.0 * float accept / float (Seq.length allscores))
 
     (*
     printfn "====================="
