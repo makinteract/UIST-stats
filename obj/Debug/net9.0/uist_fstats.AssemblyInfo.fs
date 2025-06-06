@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("uist_fstats")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8d541dfee074840baa117048c83c4b750bdb91f")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61f7402e39bf3567cf8a6973d7b7f512a0e2d59a")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("uist_fstats")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("uist_fstats")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")>]

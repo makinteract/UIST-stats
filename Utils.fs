@@ -34,6 +34,7 @@ type Submission =
       ReviewerScore: Score option
       OverallScore: Score option
       Pname: string option
+      MetaScore: Score option
       Pscore: Score option
       S1name: string option
       S1score: Score option
@@ -85,7 +86,8 @@ let private transformRow (row: CsvRow) : Submission =
       ReviewerScore = getScore row.[18]
       OverallScore = getScore row.[19]
       Pname = getName row.[27]
-      Pscore = getScore row.[29]
+      MetaScore = getScore row.[29]
+      Pscore = getScore row.[30]
       S1name = getName row.[37]
       S1score = getScore row.[38]
       S2name = getName row.[44]

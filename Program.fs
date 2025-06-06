@@ -4,10 +4,7 @@ open FSharp.Stats
 open System.IO
 
 let scores (submission: Submission) =
-    [| submission.CommitteeScore
-       submission.ReviewerScore
-       submission.OverallScore
-       submission.Pscore
+    [| submission.MetaScore
        submission.S1score
        submission.S2score
        submission.S3score
@@ -110,8 +107,42 @@ let main argv =
     let b = data |> Seq.filter isSplitB |> Seq.filter (isConflict >> not)
 
     printStats ("All submissions", all)
+    // printfn "====================="
+    // printStats ("Split A submissions", a)
+    // printfn "====================="
+    // printStats ("Split B submissions", b)
+
+
     printfn "====================="
-    printStats ("Split A submissions", a)
+    printfn "Numerical results:"
+
+
+    let allscores = all |> Seq.map averageSd |> Seq.map fst
+    let percentile75 = Quantile.mode 0.75
+
+    allscores |> Seq.average |> printfn "Average score (all): %.2f"
+    allscores |> Seq.stDev |> printfn "SD score (all): %.2f"
+    allscores |> Seq.median |> printfn "Median score (all): %.2f"
+    allscores |> Seq.min |> printfn "Min score (all): %.2f"
+    allscores |> Seq.max |> printfn "Max score (all): %.2f"
+    allscores |> percentile75 |> printfn "75th percentile score (all): %.2f"
+
+    // accetance rate for papers above a certain score
+    let mean = allscores |> Seq.average
+    let accept = allscores |> Seq.filter (fun x -> x > 3.2) |> Seq.length
+    printf "Acceptance rate: %.1f" (100.0 * float accept / float (Seq.length allscores))
+
+    (*
     printfn "====================="
-    printStats ("Split B submissions", b)
+    printfn "Detailed results:"
+
+    let allScores =
+        all
+        |> Seq.map (fun (x: Submission) ->
+            let (ID id) = x.ID
+            let avg = averageSd x
+            let s = scores x
+            (id, s, avg))
+        |> Seq.iter (fun (id, s, (avg, sd)) -> printfn "%d, %.2f, %A" id avg s)
+    *)
     0
